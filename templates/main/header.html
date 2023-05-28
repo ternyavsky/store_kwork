@@ -1,0 +1,34 @@
+{% load static %}
+<div id="navbar-main"> 
+  <!-- Fixed navbar -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+	 
+      <div class="navbar-header">
+	   <div class="pull-left logo">
+        <a class="abob" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}"/></a>
+       </div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav pull-right">
+            <li> <a href=" {% url 'page' 1 %}" class="smoothScroll">Холодильники</a></li>	
+            <li><a href="{% url 'page' 2 %}" class="smoothScroll">Телевизоры</a></li>
+          	<li> <a href=" {% url 'page' 3 %}" class="smoothScroll"> Cтиральные машины</a></li>
+            <li> <a href=" {% url 'page' 4 %}" class="smoothScroll"> Пылесосы</a></li>
+            <li> <a href=" {% url 'page' 5 %}" class="smoothScroll"> Утюги</a></li>
+          
+          {% if user.is_authenticated %}
+          <li><!--- Ссылка на личный кабинет--> <a href="{% url 'acc' user.id %}" class="smoothScroll"> {{ user }}</a></li>
+          <li><a href="{% url 'cart' %}" class="smoothScroll"> Корзина</a></li>
+          {% else %}
+          <li><a href="{% url 'login' %}" class="smoothScroll"> Войти</a></li>
+        {% endif %}
+        
+        </ul>
+      </div>
+      
+      <!--/.nav-collapse --> 
+    </div>
+  </div>
+</div>

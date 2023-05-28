@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="webthemez">
+<title>Название магаза</title>
+
+{% load static %}
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+<!-- Кастомки -->
+<link href="{% static 'css/styles.css' %}" rel="stylesheet">
+<link href=" {% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+<link href=" {% static 'css/animate-custom.css' %}" rel="stylesheet"> 
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/modernizr.custom.js' %}"></script>
+</head>
+<body data-target="#navbar-main">
+{% include 'main/header.html' %}
+
+<!-- ==== HEADERWRAP ==== -->
+<div id="home-section">
+<div id="headerwrap" name="home">
+  <header class="clearfix tb"> 
+ <div class="tb-cell text-center">
+ <i class="fa fa-heart-o icon"></i>
+    <h1>Лучшая бытовая техника</h1>
+    <p>Для лучшего дома</p>
+    {% if user.is_authenticated %}
+    <a href="{% url 'acc' request.user.id %}" class="header-button btn">Личный кабинет</a>
+    {% else %} 
+    <a href="{% url 'login' %}" class="header-button btn">Войти</a>
+    {% endif %}
+	</div>
+	</header>
+</div>
+
+</div>
+<div class="div-pattern2"></div>
+<!-- /headerwrap --> 
+
+
+
+<!-- ==== SERVICES ==== -->
+<div id="services" name="services">
+  <div class="container">
+    <div class="row">
+      <h2 class="centered">Магазин бытовых приборов премиум класса.</h2>
+      <hr>
+      <div class="col-lg-8 col-lg-offset-2">
+        <p class="large">Интернет-магазин бытовой техники, цифровой техники и электроники в Тюмени. Широкий выбор для покупки бытовой техники и электроники.</p>
+      </div>
+      <div class="col-lg-4 callout"> <i class="fa fa-android fa-3x"></i>
+        <h3>Бытовая техника</h3>
+        <p>Электрические приборы премиум сегмента</p>
+      </div>
+      <div class="col-lg-4 callout"> <i class="fa fa-table fa-3x"></i>
+        <h3>Офисная техника</h3>
+        <p>Офисные электрические приборы премиум сегмента.</p>
+      </div>
+      <div class="col-lg-4 callout"> <i class="fa fa-code-fork fa-3x"></i>
+        <h3>Аксессуары</h3>
+        <p>Аксессуары для электрических приборов премиум сегмента.</p>
+      </div>
+    </div>
+    <!-- row --> 
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<h2 class="centered">Последние товары</h2>
+
+<div class="container">
+
+  <div class="row">
+    {% for product in last_products %}
+    <div class="col-md-4">
+      <div clasi="product">
+        <div class="image">
+         <a href="{% url 'single' product.id %}"> <img src="{{ product.imageURL }}" alt=""></a>
+        </div>
+
+        <div class="info">
+          <h3>{{ product.title }}</h3>
+
+          <div>
+            <span class="price">{{ product.price }}<small>₽</small>
+            </span>
+            {% if user.is_authenticated %}
+            <a href="{% url 'cart_add' product.id %}"><button class="add-to-cart"><ion-icon name="cart"></ion-icon></button></a>
+           
+            {% else %}
+            
+            <a href="{% url 'login' %}" class="add-to-cart"><button class="look"><ion-icon name="cart"></ion-icon></button></a>
+            {% endif %}
+          </div>
+
+        </div>
+        
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+
+
+
+
+
+<!-- ==== CONTACT ==== -->
+{% if user.is_authenticated %}
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+   
+        <h4 class="text-center text-danger"> {{message}}</h4>
+       
+        
+    {% endfor %}
+</ul>
+{% endif %}
+<div id="contact" name="contact">
+  <div class="container">
+    <div class="row">
+      <h2 class="centered">Обратная связь</h2>
+      <hr>
+    
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+	  <strong>Оставьте свое сообщение здесь и с вами обязательно свяжутся!</strong>
+        <p></p>
+        <form id="contact" method="post" class="form" role="form">
+          {% csrf_token %}
+          <div class="row">
+            
+			 <div class="col-md-12 form-group">
+              <textarea class="form-control" id="message" name="text" placeholder="Message" rows="5"></textarea>             
+              <button class="btn btn-lg pull-left" type="submit">Send Message</button>
+            </div>
+          </div>
+           
+        </form>
+        <!-- form --> 
+      </div>
+	  <div class="col-md-5">
+	         
+       
+	  <i class="fa fa-map-marker fa-2x"></i>
+        <strong>Тюмень</strong>
+		<p>улица Первомайская, 34<br>
+          </p>
+      
+      <br/> 
+	  <i class="fa fa-envelope-o fa-2x"></i>
+        <p>alyona.gluxix.0@mail.ru</p>
+       
+       <br/> 
+	  <i class="fa fa-phone fa-2x"></i>
+        <p> +79092824455</p>
+       
+	  </div>
+    </div>
+    <!-- row --> 
+    
+  </div>
+</div>
+{% else %}
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+   
+        <h4 class="text-center text-danger"> {{message}}</h4>
+       
+        
+    {% endfor %}
+</ul>
+{% endif %}
+<div id="contact" name="contact">
+  <div class="container">
+    <div class="row">
+      <h2 class="centered">Обратная связь</h2>
+      <hr>
+    
+    </div>
+    <div class="row">
+      <div class="col-md-7">
+	  <strong>Оставьте свое сообщение здесь и с вами обязательно свяжутся!</strong>
+        <p></p>
+        <form id="contact" method="" class="form" role="form">
+          <div class="row">
+            
+			 <div class="col-md-12 form-group">
+              <p>Чтобы оставить обращание <a href="{% url 'login' %}">авторизуйтесь</a></p>         
+              
+            </div>
+          </div>
+           
+        </form>
+        <!-- form --> 
+      </div>
+	  <div class="col-md-5">
+	         
+       
+	  <i class="fa fa-map-marker fa-2x"></i>
+        <strong>Тюмень</strong>
+		<p>улица Первомайская, 34<br>
+          </p>
+      
+      <br/> 
+	  <i class="fa fa-envelope-o fa-2x"></i>
+        <p>alyona.gluxix.0@mail.ru</p>
+       
+       <br/> 
+	  <i class="fa fa-phone fa-2x"></i>
+        <p> +79526876125</p>
+       
+	  </div>
+    </div>
+    <!-- row --> 
+    
+  </div>
+</div>
+{% endif %}
+<!-- container -->
+
+<div id="footerwrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8"> <span class="copyright">Copyright &copy; 2022. Maded by <a href="https://github.com/ternyavsky">Timar</a></span> </div>
+      <div class="col-md-4">
+        <ul class="list-inline social-buttons">
+          <li><a href="#"><i class="fa fa-twitter"></i></a> </li>
+          <li><a href="#"><i class="fa fa-facebook"></i></a> </li>
+          <li><a href="#"><i class="fa fa-google-plus"></i></a> </li>
+          <li><a href="#"><i class="fa fa-linkedin"></i></a> </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/jquery.easing.1.3.js' %}"></script> 
+<script type="text=/javascript" src="{% static 'js/smoothscroll.js' %}"></script> 
+<script type="text/javascript" src="{% static 'js/custom-scripts.js' %}"></script>
+
+
+
+<!-- Icons scripts -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

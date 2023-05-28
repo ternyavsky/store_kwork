@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+{% load static %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}</title>
+
+    <link rel="stylesheet" href="{% static 'account/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+</head>
+<body data-target="#navbar-main">
+    
+    <div id="navbar-main"> 
+        <!-- Fixed navbar -->
+        <div class="navbar navbar-inverse navbar-fixed-top">
+          <div class="container">
+           
+            <div class="navbar-header">
+             <div class="pull-left logo">
+              <a class="abob" href="{% url 'index' %}"><img src="{% static 'img/logo2.png' %}"/></a>
+             </div>
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+              </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav pull-right">
+                  <li> <a href=" {% url 'page' 1 %}" class="smoothScroll">Холодильники</a></li>	
+                  <li><a href="{% url 'page' 2 %}" class="smoothScroll">Телевизоры</a></li>
+                    <li> <a href=" {% url 'page' 3 %}" class="smoothScroll"> Cтиральные машины</a></li>
+                  <li> <a href=" {% url 'page' 4 %}" class="smoothScroll"> Пылесосы</a></li>
+                  <li> <a href=" {% url 'page' 5 %}" class="smoothScroll"> Утюги</a></li>
+                
+                {% if user.is_authenticated %}
+                <li><!--- Ссылка на личный кабинет--> <a href="{% url 'acc' user.id %}" class="smoothScroll"> {{ user }}</a></li>
+                <li><a href="{% url 'cart' %}" class="smoothScroll"> Корзина</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="smoothScroll"> Войти</a></li>
+              {% endif %}
+              
+              </ul>
+            </div>
+            
+            <!--/.nav-collapse --> 
+          </div>
+        </div>
+      </div>
+
+    <div class="container">
+        <div class="row gutters">
+        <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="account-settings">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            {% if user.photo %} 
+                            <img src="{{ user.user_image }}" alt="Maxwell Admin">
+                            {% else %}
+                            <img src="http://placehold.it/100x100" alt="Maxwell Admin">
+                            {% endif %}
+                        </div>
+                        <h4 class="user-name">{{ user.first_name }} {{ user.last_name }}</h5>
+                        <h5 class="user-email">{{ user.email }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+        <div class="card h-100">
+            <div class="card-body">
+                <fieldset disabled>
+                <div class="row gutters">
+                    
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                       
+                        <div class="form-group">
+                            <label for="disabledTextInput">Имя пользователя</label>
+                            <input type="text" class="form-control" id="disabledTextInput" placeholder="{{user.username}}" >
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="eMail">Почта</label>
+                            <input type="email" class="form-control" id="eMail" placeholder="{{ user.email }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="row gutters">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="Street">Имя</label>
+                            <input type="name" class="form-control" id="Street" placeholder="{{ user.first_name }}">
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="ciTy">Фамилия</label>
+                            <input type="name" class="form-control" id="ciTy" placeholder="{{ user.last_name }}">
+                        </div>
+                    </div>
+                    
+                </div>
+            </fieldset>
+                <div class="row gutters">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div>
+                           <a href="{% url 'logout' %}"><button  type="button" id="eby?" name="submit" class="canc">Выйти из аккаунта</button></a>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                        <div>
+                            <a href="{% url 'edit' user.id %}"> <button type="button" id="eby?" name="submit" class="upd">Изменить данные</button></a>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'delete_account' user.id %}"><button type="button" id="logout nahuy" name="submit" class="log">Удалить аккаунт</button></a>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <script src="/static/css/bootstrap.css {% static 'css/bootstrap.css' %}"></script>
+</body>
+</html>

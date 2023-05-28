@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	{% load static %}
+	<title>Корзина </title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'cart/cart.css' %}">
+</head>
+<body data-target="">
+    <!-- хедер прикрути -->
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+		 
+		  <div class="navbar-header">
+		   <div class="pull-left logo">
+			<a class="abob" href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}"/></a>
+		   </div>
+			</div>
+		  
+		  <!--/.nav-collapse --> 
+		</div>
+	  </div>
+    <!-- хедер прикрути -->
+	{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+   
+        <h4 class="text-center text-danger"> {{message}}</h4>
+       
+        
+    {% endfor %}
+</ul>
+{% endif %}
+	<main class="page">
+	 	<section class="shopping-cart dark">
+	 		<div class="container">
+		        <div class="block-heading">
+		          <h2>Корзина</h2>
+		        </div>
+		        <div class="content">
+	 				<div class="row">
+	 					<div class="col-md-12 col-lg-8">
+	 						<div class="items">
+								{% for item in cart %} 
+								{% with product=item.product %}
+				 				<div class="product">
+				 					<div class="row">
+					 					<div class="col-md-3">
+					 						<a href="{% url 'single' product.id %}"><img class="img-fluid mx-auto d-block image" src="{{ product.imageURL }}"></a>
+					 					</div>
+					 					<div class="col-md-8">
+					 						<div class="info">
+						 						<div class="row">
+							 						<div class="col-md-5 product-name">
+							 							<div class="product-name">
+								 							<a href="{% url 'single' product.id %}" class="itemname">{{ product.title }}</a>
+								 							
+									 					</div>
+							 						</div>
+							 						<div class="col-md-4 quantity">
+							 							<label for="quantit">Количество:</label>
+														<fieldset disabled="disabled">
+							 							<input id="quantit" type="text" value ="{{ item.quantity}}" class="quan quantity-input">
+													</fieldset>
+														<a href="{% url 'move_add' product.id %}"><img src="{% static 'img/up.png' %}" alt="" width="15" height="15"></a>
+														<a href="{% url 'move_remove' product.id %}"><img src="{% static 'img/down.png' %}" alt="" width="15" height="15"></a>
+							 						</div>
+							 						<div class="col-md-3 price">
+							 							<span>{{ item.price }}₽</span>
+							 						</div>
+							 					</div>
+							 				</div>
+					 					</div>
+					 				</div>
+				 				</div>
+								{% endwith %} 
+								{% endfor %}
+				 				
+				 				
+				 			</div>
+			 			</div>
+			 			<div class="col-md-12 col-lg-4">
+			 				<div class="summary">
+			 					<h3>Summary</h3>
+			 					<div class="summary-item"><span class="text">Стоимость</span><span class="price">{{cart.get_total_price}} ₽</span></div>
+			 					<div class="summary-item"><span class="text">Скидка</span><span class="price">0₽</span></div>
+			 					<div class="summary-item"><span class="text">Доставка</span><span class="price">0₽</span></div>
+			 					<div class="summary-item"><span class="text">Всего</span><span class="price">{{cart.get_total_price}} ₽	</span></div>
+			 					<a href="{% url 'buy' %}"><button type="button" class="check">Оформить заказ</button></a>
+				 			</div>
+			 			</div>
+		 			</div> 
+		 		</div>
+	 		</div>
+		</section>
+	</main>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>

@@ -1,0 +1,146 @@
+<html lang="en">
+
+<head>
+  <title>{{ product.title }}</title>
+  <link href="https://fonts.googleapis.com/css?family=Bentham|Playfair+Display|Raleway:400,500|Suranna|Trocchi" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  {% load static %}
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  
+  <!-- Кастомки -->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+  <link href=" {% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+  <link href=" {% static 'css/animate-custom.css' %}" rel="stylesheet"> 
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/modernizr.custom.js' %}"></script>
+</head>
+
+<body>
+
+	{% include 'main/header.html' %}
+
+
+
+  
+
+
+<div class="prod">
+  <div class="wrapper">
+    <div class="product-img">
+      <img src="{{ product.imageURL }}" height="420" width="327">
+    </div>
+    
+    <div class="product-info">
+      <div class="product-text">
+        <h1>{{ product.title}}</h1>
+        <p>{{ product.text }} </p>
+      </div>
+      <div class="product-price-btn">
+        <p class="p-price"><span>{{ product.price}}₽</span></p>
+        <a href="{% url 'single_buy' product.id %}"><button type="button">Купить</button> </a>
+     <a href="{% url 'cart_add' product.id %}">   <button type="button">В корзину</button></a>
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="wrapper">
+<div class="reviews text-center"><h1 class="reviews-h1">Отзывы</h1></div>
+{% if messages %}
+
+<ul class="messages">
+    {% for message in messages %}
+   
+        <h4 class="text-center text-danger"> {{message}}</h4>
+       
+        
+    {% endfor %}
+</ul>
+{% endif %}
+
+  <!-- ЗАЛОГИНЕННЫЙ ОСТАВИТЬ ОТЗЫВ -->
+  {% if user.is_authenticated %}
+      <div class="card-body text-center">
+          <div class="row">
+              
+            <div class="review-col">
+               <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" class="review-input-2" name="text" placeholder="Оставить отзыв о товаре" >
+                </div>
+            </div>
+        </div>
+          <div class="row">
+            <div class="review-col-btn">
+                <div class="form-group">
+                   <button class="review-btn">Отправить отзыв</button>
+                </div>
+            </div>
+          </form>
+        </div>
+    </div>
+    {% endif %}
+    <!-- ЗАЛОГИНЕННЫЙ ОСТАВИТЬ ОТЗЫВ -->
+
+
+
+
+
+    <!-- НЕЗАЛОГИНЕННЫЙ ОСТАВИТЬ ОТЗЫВ -->
+{% if not user.is_authenticated %}
+    <div class="card-body text-center">
+      <div class="row">
+          
+        <div class="review-col">
+           
+            <div class="form-group">
+                <h4>Чтобы оставить отзыв необходимо авторизоваться</h4>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="review-col-btn">
+          <div class="form-group">
+              <a href="{% url 'login' %}"><button class="review-btn">Войти в аккаунт</button></a>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+{% endif %}
+  <!-- НЕЗАЛОГИНЕННЫЙ ОСТАВИТЬ ОТЗЫВ -->
+
+  <!-- отзыв -->
+  {% for feedback in feedbacks %}
+<div class="container">
+  <div class="card-body text-left">
+    <div class="row">
+        
+      <div class="review-col">
+         
+          <div class="form-group">
+              <h3>— {{ feedback.author }}</h3>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+    <div class="review-col-btn">
+        <div class="form-group">
+            <h4>{{ feedback.text }}</h4>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endfor %}
+
+<!-- отзыв -->
+
+  
+</body>
+
+</html>
