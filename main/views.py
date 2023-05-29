@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
 from .models import Product, Category, Feedback, Question
-from cloudipsp import Api, Checkout
 from django.contrib import messages
 from .cart import Cart
 from yoomoney import Quickpay
 from django.http import HttpResponseRedirect
-from payeer.api import payeer_api
-from payeer.constants import CURRENCY_USD
 from django.contrib.auth.decorators import login_required
 
 
@@ -33,6 +30,7 @@ def index(request):
                 messages.error(request,'Вы уже оставили обращение! Дождитесь ответа на текущее обращение чтобы создать следующее.')
                 print('work try')
                 return redirect('index')
+                
         except:
             author = request.user
             text = request.POST.get('text')
@@ -73,7 +71,8 @@ def single(request,product_id):
             feedback.save()
             print('work except') 
             return redirect('single',product_id)
-
+        
+        
 
 def buy(request):
     total = Cart(request).get_total_price()
