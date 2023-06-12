@@ -17,6 +17,12 @@
           	<li> <a href=" {% url 'page' 3 %}" class="smoothScroll"> Cтиральные машины</a></li>
             <li> <a href=" {% url 'page' 4 %}" class="smoothScroll"> Пылесосы</a></li>
             <li> <a href=" {% url 'page' 5 %}" class="smoothScroll"> Утюги</a></li>
+            <form action="" method="post">
+              {% csrf_token %}
+            <input type="search" id="site-search" name="search">
+            <button type="submit">Поиск</button>
+          </form>
+
           
           {% if user.is_authenticated %}
           <li><!--- Ссылка на личный кабинет--> <a href="{% url 'acc' user.id %}" class="smoothScroll"> {{ user }}</a></li>

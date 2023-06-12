@@ -5,6 +5,7 @@ $(document).ready(function(){
 			scrollTop: ($($anchor.attr('href')).offset().top) 
         }, 1500, 'easeInOutExpo');
         event.preventDefault();
+
     });
 });
 

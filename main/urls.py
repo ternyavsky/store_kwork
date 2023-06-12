@@ -13,6 +13,7 @@ urlpatterns = [
     path('accept',views.accept,name='accept'),
     path('decline',views.decline,name='decline'),
     path('buy<int:product_id>',views.single_buy,name='single_buy'),
+    path('search',views.search_v,name='search')
 
 
 ]   
